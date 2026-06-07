@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="12" passed="12" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2026-06-07T08:43:05 PKT" name="Surefire suite" finished-at="2026-06-07T08:43:05 PKT" duration-ms="173">
+    <groups>
+    </groups>
+    <test started-at="2026-06-07T08:43:05 PKT" name="Surefire test" finished-at="2026-06-07T08:43:05 PKT" duration-ms="173">
+      <class name="model.RideTest">
+        <test-method signature="testFareForBike()[pri:0, instance:model.RideTest@799d4f69]" started-at="2026-06-07T08:43:05 PKT" name="testFareForBike" finished-at="2026-06-07T08:43:05 PKT" duration-ms="5" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testFareForBike -->
+        <test-method signature="testFareForCar()[pri:0, instance:model.RideTest@799d4f69]" started-at="2026-06-07T08:43:05 PKT" name="testFareForCar" finished-at="2026-06-07T08:43:05 PKT" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testFareForCar -->
+      </class> <!-- model.RideTest -->
+      <class name="model.RiderTest">
+        <test-method signature="testGetName()[pri:0, instance:model.RiderTest@45afc369]" started-at="2026-06-07T08:43:05 PKT" name="testGetName" finished-at="2026-06-07T08:43:05 PKT" duration-ms="3" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetName -->
+      </class> <!-- model.RiderTest -->
+      <class name="model.VehicleTest">
+        <test-method signature="testBikeCalculateFareAndType()[pri:0, instance:model.VehicleTest@290dbf45]" started-at="2026-06-07T08:43:05 PKT" name="testBikeCalculateFareAndType" finished-at="2026-06-07T08:43:05 PKT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testBikeCalculateFareAndType -->
+        <test-method signature="testCarCalculateFareAndType()[pri:0, instance:model.VehicleTest@290dbf45]" started-at="2026-06-07T08:43:05 PKT" name="testCarCalculateFareAndType" finished-at="2026-06-07T08:43:05 PKT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testCarCalculateFareAndType -->
+      </class> <!-- model.VehicleTest -->
+      <class name="model.DriverTest">
+        <test-method signature="testGetNameReturnsDriverName()[pri:0, instance:model.DriverTest@d6da883]" started-at="2026-06-07T08:43:05 PKT" name="testGetNameReturnsDriverName" finished-at="2026-06-07T08:43:05 PKT" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetNameReturnsDriverName -->
+        <test-method signature="testGetVehicleReturnsDriverVehicle()[pri:0, instance:model.DriverTest@d6da883]" started-at="2026-06-07T08:43:05 PKT" name="testGetVehicleReturnsDriverVehicle" finished-at="2026-06-07T08:43:05 PKT" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testGetVehicleReturnsDriverVehicle -->
+      </class> <!-- model.DriverTest -->
+      <class name="model.BikeTest">
+        <test-method signature="shouldCalculateFareForBikeCorrectly()[pri:0, instance:model.BikeTest@32464a14]" started-at="2026-06-07T08:43:05 PKT" name="shouldCalculateFareForBikeCorrectly" finished-at="2026-06-07T08:43:05 PKT" duration-ms="21" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- shouldCalculateFareForBikeCorrectly -->
+        <test-method signature="shouldReturnBikeType()[pri:0, instance:model.BikeTest@32464a14]" started-at="2026-06-07T08:43:05 PKT" name="shouldReturnBikeType" finished-at="2026-06-07T08:43:05 PKT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- shouldReturnBikeType -->
+      </class> <!-- model.BikeTest -->
+      <class name="model.CarTest">
+        <test-method signature="shouldCalculateFareForCarCorrectly()[pri:0, instance:model.CarTest@5cdd8682]" started-at="2026-06-07T08:43:05 PKT" name="shouldCalculateFareForCarCorrectly" finished-at="2026-06-07T08:43:05 PKT" duration-ms="4" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- shouldCalculateFareForCarCorrectly -->
+        <test-method signature="shouldReturnCarType()[pri:0, instance:model.CarTest@5cdd8682]" started-at="2026-06-07T08:43:05 PKT" name="shouldReturnCarType" finished-at="2026-06-07T08:43:05 PKT" duration-ms="2" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- shouldReturnCarType -->
+      </class> <!-- model.CarTest -->
+      <class name="model.UserTest">
+        <test-method signature="testAbstractUserNameIsStored()[pri:0, instance:model.UserTest@49c43f4e]" started-at="2026-06-07T08:43:05 PKT" name="testAbstractUserNameIsStored" finished-at="2026-06-07T08:43:05 PKT" duration-ms="4" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAbstractUserNameIsStored -->
+      </class> <!-- model.UserTest -->
+    </test> <!-- Surefire test -->
+  </suite> <!-- Surefire suite -->
+</testng-results>

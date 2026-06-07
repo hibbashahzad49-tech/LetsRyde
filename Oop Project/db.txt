@@ -1,0 +1,6 @@
+call database
+
+USE letsryde;
+
+
+SHOW TABLES;

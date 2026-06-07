@@ -1,0 +1,7 @@
+model\Bike.class
+model\Rider.class
+model\Vehicle.class
+model\Ride.class
+model\Car.class
+model\Driver.class
+model\User.class

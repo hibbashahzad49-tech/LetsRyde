@@ -1,0 +1,402 @@
+bike.java
+
+package model;
+
+public class Bike extends Vehicle {
+
+    public double calculateFare(double distance) {
+        return distance * 150;
+    }
+    public String getType() {
+        return "Bike";
+    }
+}
+
+
+car.java
+
+package model;
+
+public class Car extends Vehicle {
+
+    public double calculateFare(double distance) {
+        return distance * 200;
+    }
+    public String getType() {
+        return "Car";
+    }
+}
+
+driver.java
+
+package model;
+
+public class Driver {
+    private String name;
+    private Vehicle vehicle;
+
+    public Driver(String name, Vehicle vehicle) {
+        this.name = name;
+        this.vehicle = vehicle;
+    }
+    public String getName() {
+        return name;
+    }
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+}
+
+
+ride.java
+
+package model;
+
+public class Ride {
+    private Rider rider;
+    private Driver driver;
+    private double distance;
+
+    public Ride(Rider rider, Driver driver, double distance) {
+        this.rider = rider;
+        this.driver = driver;
+        this.distance = distance;
+    }
+    public double getFare() {
+        String vehicleType = driver.getVehicle().getType();
+        double ratePerKm = 0;
+        if (vehicleType.equalsIgnoreCase("Car")) {
+            ratePerKm = 50;
+        } else if (vehicleType.equalsIgnoreCase("Bike")) {
+            ratePerKm = 30;
+        }
+        return distance * ratePerKm;
+    }
+    public String getDetails() {
+        return rider.getName() + "," +
+                driver.getName() + "," +
+                driver.getVehicle().getType() + "," +
+                distance + "," +
+                getFare();
+    }
+    public Rider getRider() {
+        return rider;
+    }
+    public Driver getDriver() {
+        return driver;
+    }
+    public double getDistance() {
+        return distance;
+    }
+}
+
+rider.java
+
+package model;
+
+public class Rider {
+    private String name;
+
+    public Rider(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+user.java 
+
+
+package model;
+
+public abstract class User {
+    protected String name;
+
+    public User(String name) {
+        this.name = name;
+    }
+}
+
+vehicle.java
+
+package model;
+
+public abstract class Vehicle {
+    public abstract double calculateFare(double distance);
+    public abstract String getType();
+}
+
+fileservice.java
+
+package service;
+
+import model.Ride;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class FileService {
+
+    private static final String RIDE_FILE = "rides.txt";
+    // Save details
+    public static void saveRide(Ride ride) {
+        try (FileWriter fw = new FileWriter(RIDE_FILE, true)) {
+            fw.write(ride.getDetails() + System.lineSeparator());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    // Load all rides
+    public static ArrayList<String> loadRides() {
+        ArrayList<String> rides = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(RIDE_FILE))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                rides.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return rides;
+    }
+}
+
+main.java
+
+package ui;
+import model.*;
+import service.FileService;
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+public class Main {
+    private JFrame frame;
+    private JLabel result;
+
+    private ArrayList<Driver> drivers = new ArrayList<>();
+
+    public Main() {
+        // Sample drivers
+        drivers.add(new Driver("Ali Hamza", new Car()));
+        drivers.add(new Driver("Saleem", new Bike()));
+        drivers.add(new Driver("Ammna", new Car()));
+    }
+    public void createAndShowGUI() {
+        frame = new JFrame("LetsRyde - Ride Booking");
+        frame.setSize(750, 500);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout(10, 10));
+        frame.getContentPane().setBackground(new Color(173, 216, 230));
+        // Heading
+        JLabel title = new JLabel("LetsRyde - Book Your Ride", SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 26));
+        title.setForeground(Color.WHITE);
+        title.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
+        frame.add(title, BorderLayout.NORTH);
+        // Center panel
+        JPanel centerPanel = new JPanel(new GridBagLayout());
+        centerPanel.setBackground(new Color(135, 206, 250));
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 40));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(10, 10, 10, 10);
+        // Rider Name
+        gbc.gridx = 0; gbc.gridy = 0;
+        centerPanel.add(new JLabel("Rider Name:"), gbc);
+        gbc.gridx = 1;
+        JTextField riderField = new JTextField(20);
+        centerPanel.add(riderField, gbc);
+        // From
+        gbc.gridx = 0; gbc.gridy = 1;
+        centerPanel.add(new JLabel("From:"), gbc);
+        gbc.gridx = 1;
+        JTextField originField = new JTextField(20);
+        centerPanel.add(originField, gbc);
+        // To
+        gbc.gridx = 0; gbc.gridy = 2;
+        centerPanel.add(new JLabel("To:"), gbc);
+        gbc.gridx = 1;
+        JTextField destField = new JTextField(20);
+        centerPanel.add(destField, gbc);
+        // Distance
+        gbc.gridx = 0; gbc.gridy = 3;
+        centerPanel.add(new JLabel("Distance (km):"), gbc);
+        gbc.gridx = 1;
+        JTextField distanceField = new JTextField(20);
+        centerPanel.add(distanceField, gbc);
+        // Available Drivers
+        gbc.gridx = 0; gbc.gridy = 4;
+        centerPanel.add(new JLabel("Available Drivers:"), gbc);
+        gbc.gridx = 1;
+        DefaultListModel<String> driverModel = new DefaultListModel<>();
+        for (Driver d : drivers) {
+            driverModel.addElement(d.getName() + " (" + d.getVehicle().getType() + ")");
+        }
+        JList<String> driverList = new JList<>(driverModel);
+        driverList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        driverList.setVisibleRowCount(3);
+        JScrollPane scrollPane = new JScrollPane(driverList);
+        centerPanel.add(scrollPane, gbc);
+        // Book Ride Button
+        gbc.gridx = 0; gbc.gridy = 5; gbc.gridwidth = 2; gbc.anchor = GridBagConstraints.CENTER;
+        JButton bookBtn = new JButton("Book Ride");
+        bookBtn.setBackground(new Color(0, 102, 204));
+        bookBtn.setForeground(Color.WHITE);
+        bookBtn.setPreferredSize(new Dimension(150, 35));
+        centerPanel.add(bookBtn, gbc);
+        // View History Button
+        gbc.gridy = 6;
+        JButton historyBtn = new JButton("View History");
+        historyBtn.setBackground(new Color(0, 153, 255));
+        historyBtn.setForeground(Color.WHITE);
+        historyBtn.setPreferredSize(new Dimension(150, 30));
+        centerPanel.add(historyBtn, gbc);
+        frame.add(centerPanel, BorderLayout.CENTER);
+        // Bottom panel for result
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setBackground(new Color(173, 216, 230));
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 10));
+        result = new JLabel(" ");
+        result.setFont(new Font("Arial", Font.BOLD, 16));
+        bottomPanel.add(result);
+        frame.add(bottomPanel, BorderLayout.SOUTH);
+        //Action
+        bookBtn.addActionListener(e -> {
+            try {
+                String riderName = riderField.getText().trim();
+                String origin = originField.getText().trim();
+                String destination = destField.getText().trim();
+                double distance = Double.parseDouble(distanceField.getText().trim());
+                if (riderName.isEmpty() || origin.isEmpty() || destination.isEmpty()) {
+                    setResult("Please fill all fields.", Color.RED);
+                    return;
+                }
+                if (distance <= 0) {
+                    setResult("Distance must be positive.", Color.RED);
+                    return;
+                }
+                int selectedIndex = driverList.getSelectedIndex();
+                if (selectedIndex == -1) {
+                    setResult("Please select a driver.", Color.RED);
+                    return;
+                }
+                Driver selectedDriver = drivers.get(selectedIndex);
+                Rider rider = new Rider(riderName);
+
+                Ride ride = new Ride(rider, selectedDriver, distance);
+                FileService.saveRide(ride);
+
+                setResult(String.format("Ride booked from %s to %s with %s! Fare: ₹%.2f",
+                        origin, destination, selectedDriver.getName(), ride.getFare()), new Color(0, 128, 0));
+            } catch (NumberFormatException ex) {
+                setResult("Please enter a valid number for distance.", Color.RED);
+            } catch (Exception ex) {
+                setResult("Error booking ride. Try again.", Color.RED);
+            }
+        });
+        //Action
+        historyBtn.addActionListener(e -> {
+            ArrayList<String> rides = FileService.loadRides();
+            if (rides.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "No ride history found.", "Ride History", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                StringBuilder sb = new StringBuilder();
+                for (String r : rides) {
+                    sb.append(r).append("\n");
+                }
+                JTextArea textArea = new JTextArea(sb.toString());
+                textArea.setEditable(false);
+                JScrollPane historyScroll = new JScrollPane(textArea);
+                historyScroll.setPreferredSize(new Dimension(500, 250));
+                JOptionPane.showMessageDialog(frame, historyScroll, "Ride History", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        frame.setVisible(true);
+    }
+    private void setResult(String msg, Color color) {
+        result.setText(msg);
+        result.setForeground(color);
+    }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            Main app = new Main();
+            app.createAndShowGUI();
+        });
+    }
+}
+
+
+loginscreen.java
+
+package ui;
+import javax.swing.*;
+import java.awt.*;
+public class LoginScreen extends JFrame {
+    private JTextField usernameField;
+    private JPasswordField passwordField;
+
+    public LoginScreen() {
+        setTitle("LetsRyde Login");
+        setSize(1000, 700);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new GridBagLayout());
+        getContentPane().setBackground(new Color(173, 216, 230)); //background
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10,10,10,10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        // Heading
+        JLabel heading = new JLabel("LetsRyde Login", SwingConstants.CENTER);
+        heading.setFont(new Font("Arial", Font.BOLD, 24));
+        heading.setForeground(Color.WHITE);
+        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
+        add(heading, gbc);
+        // Username label
+        gbc.gridwidth = 1;
+        gbc.gridx = 0; gbc.gridy = 1;
+        add(new JLabel("Username:"), gbc);
+        gbc.gridx = 1;
+        usernameField = new JTextField(15);
+        add(usernameField, gbc);
+        // Password label
+        gbc.gridx = 0; gbc.gridy = 2;
+        add(new JLabel("Password:"), gbc);
+        gbc.gridx = 1;
+        passwordField = new JPasswordField(15);
+        add(passwordField, gbc);
+        // Login button
+        gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 2;
+        JButton loginBtn = new JButton("Login");
+        loginBtn.setBackground(new Color(0, 102, 204)); // darker blue button
+        loginBtn.setForeground(Color.WHITE);
+        add(loginBtn, gbc);
+        // action
+        loginBtn.addActionListener(e -> {
+            String user = usernameField.getText().trim();
+            String pass = new String(passwordField.getPassword());
+
+            if(authenticate(user, pass)) {
+                SwingUtilities.invokeLater(() -> new Main().createAndShowGUI());
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Invalid username or password",
+                        "Login Failed",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    }
+
+    private boolean authenticate(String user, String pass) {
+        return user.equals("user") && pass.equals("12345");
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new LoginScreen().setVisible(true));
+    }
+}
