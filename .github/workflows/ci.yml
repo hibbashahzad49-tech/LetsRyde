@@ -1,0 +1,25 @@
+name: Java CI/CD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Code checkout karo
+      uses: actions/checkout@v3
+
+    - name: Java 17 setup karo
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Build karo
+      run: mvn clean install
+
+    - name: Tests chalao
+      run: mvn test
